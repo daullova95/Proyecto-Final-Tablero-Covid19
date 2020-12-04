@@ -1,5 +1,5 @@
 ---
-title: "Estado del COVID-19 en Costa Rica (Daniel Ulloa y María José Cálvo)"
+title: "Estado del COVID-19 en Costa Rica (Daniel Ulloa y María José Calvo)"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -23,10 +23,10 @@ library(tidyverse)
 
 #-------------------- Colores ---------------------
 
-color_positivos <- 'blue'
+color_positivos <- 'darkblue'
 color_activos <- 'red'
 color_recuperados <- 'green'
-color_fallecidos <- 'violet'
+color_fallecidos <- 'purple'
 
 color_nuevos_positivos <- 'pink'
 
@@ -323,10 +323,10 @@ Row {data-width=400}
 
 ### Mapa de casos positivos en distritos
 ```{r}
-
+binsP <- c(0, 50, 100, 500, 1000, 5000, Inf)
 paleta_azul <- colorBin(palette = "Blues", 
                         domain = sf_general_distritos_ultima_fecha$positivos,
-                        bins = 10
+                        bins = binsP
                )
 
 leaflet_cantones <- leaflet(sf_general_distritos_ultima_fecha) %>% 
@@ -386,7 +386,8 @@ otros$canton <- vec1
 otros$provincia<- vec1
 top10masotros=rbind(top10, otros[1,])
 
-fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$positivos, type = 'pie')
+fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$positivos, type = 'pie',
+ textposition = 'inside')
 fig <- fig %>% layout(title = 'Porcentaje de casos positivos por distrito',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -419,10 +420,10 @@ Row {data-width=400}
 
 ### Mapa de casos activos en distritos
 ```{r}
-
+binsA <- c(0, 25, 50, 100, 500, 1000, 2000, Inf)
 paleta_roja <- colorBin(palette = "Reds", 
                         domain = sf_general_distritos_ultima_fecha$activos,
-                        bins = 10
+                        bins = binsA
                )
 
 leaflet_cantones <- leaflet(sf_general_distritos_ultima_fecha) %>% 
@@ -480,7 +481,8 @@ otros$canton <- vec1
 otros$provincia<- vec1
 top10masotros=rbind(top10, otros[1,])
 
-fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$activos, type = 'pie')
+fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$activos, type = 'pie',
+ textposition = 'inside')
 fig <- fig %>% layout(title = 'Porcentaje de casos activos por distrito',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -512,10 +514,10 @@ Row {data-width=400}
 
 ### Mapa de casos recuperados en distritos
 ```{r}
-
+binsR <- c(0, 25, 50, 100, 500, 1000, 2000, Inf)
 paleta_verde <- colorBin(palette = "Greens", 
                         domain = sf_general_distritos_ultima_fecha$recuperados,
-                        bins = 10
+                        bins = binsR
                )
 
 leaflet_cantones <- leaflet(sf_general_distritos_ultima_fecha) %>% 
@@ -573,7 +575,8 @@ otros$canton <- vec1
 otros$provincia<- vec1
 top10masotros=rbind(top10, otros[1,])
 
-fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$recuperados, type = 'pie')
+fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$recuperados, type = 'pie',
+ textposition = 'inside')
 fig <- fig %>% layout(title = 'Porcentaje de casos recuperados por distrito',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -605,10 +608,10 @@ Row {data-width=400}
 
 ### Mapa de casos fallecidos en distritos
 ```{r}
-
+binsF <- c(0, 1, 2, 4, 6, 8, 10, 30, 50, 100, 150, Inf)
 paleta_violeta <- colorBin(palette = "Purples", 
                         domain = sf_general_distritos_ultima_fecha$fallecidos,
-                        bins = 10
+                        bins = binsF
                )
 
 leaflet_cantones <- leaflet(sf_general_distritos_ultima_fecha) %>% 
@@ -667,7 +670,8 @@ otros$canton <- vec1
 otros$provincia<- vec1
 top10masotros=rbind(top10, otros[1,])
 
-fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$fallecidos, type = 'pie')
+fig <- plot_ly(top10masotros, labels = top10masotros$distrito, values = top10masotros$fallecidos, type = 'pie',
+ textposition = 'inside')
 fig <- fig %>% layout(title = 'Porcentaje de casos fallecidos por distrito',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
